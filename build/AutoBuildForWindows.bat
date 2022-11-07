@@ -404,11 +404,9 @@ rem ***********************************************
   set vConfiguration=%1
   cd  %RootDir%
   echo "make OS=%vOSType%  ARCH=%vArcType% USE_ASM=%vASMFlag% BUILDTYPE=%vConfiguration% clean"
-  echo "make OS=%vOSType%  ARCH=%vArcType% USE_ASM=%vASMFlag% BUILDTYPE=%vConfiguration% %NATIVE_OPTIONS%"
-  echo "make OS=%vOSType%  ARCH=%vArcType% USE_ASM=%vASMFlag% BUILDTYPE=%vConfiguration% %NATIVE_OPTIONS% plugin"
+  echo "make OS=%vOSType%  ARCH=%vArcType% USE_ASM=%vASMFlag% BUILDTYPE=%vConfiguration% %NATIVE_OPTIONS% install"
   make OS=%vOSType%  ARCH=%vArcType% USE_ASM=%vASMFlag% BUILDTYPE=%vConfiguration% clean
-  make OS=%vOSType%  ARCH=%vArcType% USE_ASM=%vASMFlag% BUILDTYPE=%vConfiguration% %NATIVE_OPTIONS%
-  make OS=%vOSType%  ARCH=%vArcType% USE_ASM=%vASMFlag% BUILDTYPE=%vConfiguration% %NATIVE_OPTIONS% plugin
+  make OS=%vOSType%  PREFIX=/%vConfiguration% DESTDIR=%openh264_BUILD_DIR% ARCH=%vArcType% USE_ASM=%vASMFlag% BUILDTYPE=%vConfiguration% %NATIVE_OPTIONS% install
   if not %ERRORLEVEL%==0 (
     set BuildFlag=1
   )
@@ -440,7 +438,7 @@ goto :EOF
   cd
   set DestDir=bin/%vBinDirName%/%vConfiguration%
   echo DestDir is %DestDir%
-  set aFileList=%DllFile% %LibFile% %PDBFile% %UTBinFile% %EncBinFile% %DecBinFile%
+  set aFileList=%DllFile% %LibFile% %PDBFile% %EncBinFile% %DecBinFile%
   for %%k in (%aFileList%) do (
     bash -c "cp -f  %%k  %DestDir%"
   )
